@@ -11,6 +11,7 @@ Template.xdatetime_view.helpers
 
 AutoForm.hooks
   id1:
-    onSubmit: (insertDoc, updateDoc, currentDoc) ->
-      console.log insertDoc, updateDoc, currentDoc
-      false
+    before:
+      save: (doc, template) ->
+        console.log doc
+        false

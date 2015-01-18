@@ -2,7 +2,7 @@ Package.describe({
   name: 'miguelalarcos:afwrap-xdatetime',
   summary: 'wrap over xdatetime so it works ok with autoform',
   version: '0.1.0',
-  git: ' /* Fill me in! */ '
+  git: 'https://github.com/miguelalarcos/afwrap-xdatetime.git'
 });
 
 Package.onUse(function(api) {
