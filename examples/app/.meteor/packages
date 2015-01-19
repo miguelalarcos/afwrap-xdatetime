@@ -13,3 +13,5 @@ aldeed:simple-schema
 nooitaf:semantic-ui
 momentjs:moment
 aldeed:autoform@4.2.2
+sanjo:jasmine
+velocity:html-reporter

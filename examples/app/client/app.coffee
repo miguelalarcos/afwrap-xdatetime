@@ -7,7 +7,7 @@
     optional: true
 
 Template.xdatetime_view.helpers
-  data: -> {datetime1: moment.utc().toDate(), datetime2: moment.utc().toDate()}
+  data: -> {datetime1: moment.utc(), datetime2: moment.utc()}
 
 AutoForm.hooks
   id1:

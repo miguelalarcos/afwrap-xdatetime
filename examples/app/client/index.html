@@ -11,3 +11,10 @@
         {{/autoForm}}
     {{/with}}
 </template>
+
+
+<template name="testing">
+    {{#autoForm id="0" doc=this type='method' meteormethod='save' schema='dateSchema'}}
+        <div>{{> afFieldInput  type='xdatetime' formid="0" name='datetime1' time='true' format='DD-MM-YYYY HH:mm'}}</div>
+    {{/autoForm}}
+</template>
