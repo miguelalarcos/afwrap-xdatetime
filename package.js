@@ -10,9 +10,9 @@ Package.onUse(function(api) {
   api.use('coffeescript', 'client');
   api.use('jquery', 'client');
   api.use('templating', 'client');
-  api.use('aldeed:autoform', 'client');
-  api.use('momentjs:moment', 'client');
-  api.use('miguelalarcos:xdatetime', 'client');
+  api.use('aldeed:autoform@4.2.2', 'client');
+  api.use('momentjs:moment@2.8.4', 'client');
+  api.use('miguelalarcos:xdatetime@0.1.0', 'client');
   api.addFiles('wrap.coffee', 'client');
 });
 
