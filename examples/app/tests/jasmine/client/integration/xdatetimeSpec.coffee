@@ -29,7 +29,7 @@ describe 'test init', ->
 describe 'test...', ->
   el= null
   beforeEach ->
-    el = Blaze.renderWithData(Template.testing, {}, $('body')[0])
+    el = Blaze.renderWithData(Template.testing, {datetime1: moment('2015-01-01').toDate()}, $('body')[0])
     Meteor.flush()
   afterEach ->
     Blaze.remove(el)
@@ -41,4 +41,19 @@ describe 'test...', ->
     back = moment($('[formid=0].xwidget').val())
     bool = moment(m).isSame(back)
     expect(bool).toBe(true)
+
+  it 'test init get', ->
+    back = moment($('[formid=0].xwidget').val())
+    bool = moment('2015-01-01').isSame(back)
+    expect(bool).toBe(true)
+
+  it 'test click day', ->
+    $('[formid=0] .show-calendar').trigger('click')
+    Meteor.flush()
+    $('[formid=0] .xtoday').trigger('click')
+    Meteor.flush()
+    back = moment.utc($('[formid=0].xwidget').val()).startOf('day')
+    today = moment.utc().startOf('day')
+    expect(back.isSame(today)).toBe(true)
+
 
