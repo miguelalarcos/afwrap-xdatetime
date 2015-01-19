@@ -1,6 +1,6 @@
 dayRow = @_testing_xdatetime.dayRow
 xday = @_testing_xdatetime.xday
-data = @data
+show_calendar = @_testing_xdatetime.show_calendar
 
 describe 'test dayRow',->
   beforeEach ->
@@ -35,11 +35,11 @@ describe 'test...', ->
     Blaze.remove(el)
 
   it 'test set get', ->
-    m = moment.utc().seconds(0).milliseconds(0).toDate()
+    m = moment.utc()
     $('[formid=0].xwidget').val(m)
     Meteor.flush()
     back = moment($('[formid=0].xwidget').val())
-    bool = moment(m).isSame(back)
+    bool = moment(m).startOf('minute').isSame(back)
     expect(bool).toBe(true)
 
   it 'test init get', ->
@@ -56,4 +56,81 @@ describe 'test...', ->
     today = moment.utc().startOf('day')
     expect(back.isSame(today)).toBe(true)
 
+describe 'test...', ->
+  el= null
+  beforeEach ->
+    el = Blaze.renderWithData(Template.testing, {datetime1: moment('2015-01-01').toDate()}, $('body')[0])
+    Meteor.flush()
+    $('[formid=0] .show-calendar').trigger('click')
+    Meteor.flush()
+  afterEach ->
+    $('[formid=0] .show-calendar').trigger('click')
+    Meteor.flush()
+    Blaze.remove(el)
+
+  it 'test minus 1 minute', ->
+    dt = xday.get().clone()
+    $('[formid=0] .minus-minute').trigger('click')
+    dt2 = xday.get() # ojo en algun momento xday deja de estar en utc. Invesigarlo
+    expect(dt.diff(dt2, 'minutes')).toBe(1)
+
+  it 'test plus 1 minute', ->
+    dt = xday.get().clone()
+    $('[formid=0] .plus-minute').trigger('click')
+    dt2 = xday.get()
+    expect(dt.diff(dt2, 'minutes')).toBe(-1)
+
+  it 'test minus 1 hour', ->
+    dt = xday.get().clone()
+    $('[formid=0] .minus-hour').trigger('click')
+    dt2 = xday.get()
+    expect(dt.diff(dt2, 'hours')).toBe(1)
+
+  it 'test plus 1 hour', ->
+    dt = xday.get().clone()
+    $('[formid=0] .plus-hour').trigger('click')
+    dt2 = xday.get()
+    expect(dt.diff(dt2, 'hours')).toBe(-1)
+
+  it 'test minus 1 month', ->
+    dt = xday.get().clone()
+    $('[formid=0] .minus-month').trigger('click')
+    dt2 = xday.get()
+    expect(dt.diff(dt2, 'months')).toBe(1)
+
+  it 'test plus 1 month', ->
+    dt = xday.get().clone()
+    $('[formid=0] .plus-month').trigger('click')
+    dt2 = xday.get()
+    expect(dt.diff(dt2, 'months')).toBe(-1)
+
+  it 'test minus 1 year', ->
+    dt = xday.get().clone()
+    $('[formid=0] .minus-year').trigger('click')
+    dt2 = xday.get()
+    expect(dt.diff(dt2, 'years')).toBe(1)
+
+  it 'test plus 1 year', ->
+    dt = xday.get().clone()
+    $('[formid=0] .plus-year').trigger('click')
+    dt2 = xday.get()
+    expect(dt.diff(dt2, 'years')).toBe(-1)
+
+  it 'test change year', ->
+    dt = xday.get().clone()
+    current_year = parseInt($('[formid=0] .xdatetime-year').val())
+    $('[formid=0] .xdatetime-year').val(current_year+1)
+    $('[formid=0] .set-year').trigger('click')
+
+    dt2 = xday.get()
+    expect(dt2.diff(dt, 'years')).toBe(1)
+
+  it 'test change time', ->
+    dt = moment($('[formid=0].xwidget').val()).startOf('day')
+    $('[formid=0] .xdatetime-time').val('00:00')
+    $('[formid=0] .set-time').trigger('click')
+    Meteor.flush()
+    dt2 = moment($('[formid=0].xwidget').val())
+    bool = dt.isSame(dt2)
+    expect(bool).toBe(true)
 
