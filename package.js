@@ -12,7 +12,7 @@ Package.onUse(function(api) {
   api.use('templating', 'client');
   api.use('aldeed:autoform@4.2.2', 'client');
   api.use('momentjs:moment@2.8.4', 'client');
-  api.use('miguelalarcos:xdatetime@0.1.1', 'client');
+  api.use('miguelalarcos:xdatetime@0.1.2', 'client');
   api.addFiles('wrap.coffee', 'client');
 });
 
