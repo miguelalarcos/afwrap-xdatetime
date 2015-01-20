@@ -35,7 +35,7 @@ describe 'test basics', ->
     Blaze.remove(el)
 
   it 'test set get', ->
-    m = moment.utc()
+    m = moment.utc().toDate()
     $('[formid=0].xwidget').val(m)
     Meteor.flush()
     back = moment($('[formid=0].xwidget').val())
