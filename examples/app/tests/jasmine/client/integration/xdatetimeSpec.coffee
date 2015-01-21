@@ -59,13 +59,16 @@ describe 'test basics', ->
 describe 'test ui', ->
   el= null
   beforeEach ->
+    show_calendar.set(false)
     el = Blaze.renderWithData(Template.testing, {datetime1: moment('2015-01-01').toDate()}, $('body')[0])
     Meteor.flush()
     $('[formid=0] .show-calendar').trigger('click')
     Meteor.flush()
+
   afterEach ->
-    $('[formid=0] .show-calendar').trigger('click')
-    Meteor.flush()
+    if show_calendar.get()
+      $('[formid=0] .show-calendar').trigger('click')
+      Meteor.flush()
     Blaze.remove(el)
 
   it 'test minus 1 minute', ->
