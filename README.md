@@ -3,7 +3,8 @@ afwrap-xdatetime
 
 This is a wrap over the [xdatetime](https://github.com/miguelalarcos/xdatetime) package to work with ```AutoForm```.
 
-In the examples folder you have a working example and a battery of tests with ```Jasmine```.
+Explanation
+-----------
 
 Examples:
 
@@ -13,3 +14,5 @@ Examples:
     <div>{{> afFieldInput  type='xdatetime' formid="id1" name='datetime2' format='DD-MM-YYYY'}}</div>
 {{/autoForm}}
 ```
+
+In the examples folder you have a working example and a battery of tests with ```Jasmine```.
