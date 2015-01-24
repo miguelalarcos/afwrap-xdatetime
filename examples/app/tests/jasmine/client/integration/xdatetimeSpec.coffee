@@ -1,18 +1,16 @@
 dayRow = @_testing_xdatetime.dayRow
-xday = @_testing_xdatetime.xday
 show_calendar = @_testing_xdatetime.show_calendar
+data = @_testing_xdatetime.data
 
 describe 'test dayRow',->
-  beforeEach ->
-    xday.set(moment.utc('18-01-2015','DD-MM-YYYY'))
   it 'test', ->
-    list = (x.value for x in dayRow(0))
+    list = (x.value for x in dayRow(0, moment.utc('18-01-2015','DD-MM-YYYY')))
     expect(list).toEqual(['29','30','31','01','02','03','04'])
   it 'test 2', ->
-    list = (x.value for x in dayRow(4))
+    list = (x.value for x in dayRow(4, moment.utc('18-01-2015','DD-MM-YYYY')))
     expect(list).toEqual(['26','27','28','29','30','31','01'])
   it 'test 3', ->
-    list = (x.value for x in dayRow(5))
+    list = (x.value for x in dayRow(5, moment.utc('18-01-2015','DD-MM-YYYY')))
     expect(list).toEqual([])
 
 describe 'test init', ->
@@ -25,6 +23,20 @@ describe 'test init', ->
     bool = moment(back).isSame(m)
     expect(bool).toBe(true)
     Blaze.remove(el)
+
+describe 'test no degeneration', ->
+  it 'test', ->
+    el = Blaze.renderWithData(Template.testing, {datetime1: moment('2015-01-01').toDate()}, $('body')[0])
+    Meteor.flush()
+    date = moment().startOf('minute').utc().toDate()
+    $('[formid=0].xwidget').val(date)
+    date2 = $('[formid=0].xwidget').val()
+    $('[formid=0].xwidget').val(date2)
+    date3 = $('[formid=0].xwidget').val()
+    bool = moment(date).isSame(moment(date3))
+    expect(bool).toBe(true)
+    Blaze.remove(el)
+
 
 describe 'test basics', ->
   el= null
@@ -52,8 +64,8 @@ describe 'test basics', ->
     Meteor.flush()
     $('[formid=0] .xtoday').trigger('click')
     Meteor.flush()
-    back = moment($('[formid=0].xwidget').val()).utc().startOf('day')
-    today = moment.utc().startOf('day')
+    back = moment($('[formid=0].xwidget').val()).startOf('day').utc()
+    today = moment().startOf('day').utc()
     expect(back.isSame(today)).toBe(true)
 
 describe 'test ui', ->
@@ -72,68 +84,77 @@ describe 'test ui', ->
     Blaze.remove(el)
 
   it 'test minus 1 minute', ->
-    dt = xday.get().clone()
+    path_ = '0:datetime1'
+    dt = data.findOne(path: path_).value
     $('[formid=0] .minus-minute').trigger('click')
-    dt2 = xday.get()
+    dt2 = data.findOne(path: path_).value
     expect(dt.diff(dt2, 'minutes')).toBe(1)
 
   it 'test plus 1 minute', ->
-    dt = xday.get().clone()
+    path_ = '0:datetime1'
+    dt = data.findOne(path: path_).value
     $('[formid=0] .plus-minute').trigger('click')
-    dt2 = xday.get()
+    dt2 = data.findOne(path: path_).value
     expect(dt.diff(dt2, 'minutes')).toBe(-1)
 
   it 'test minus 1 hour', ->
-    dt = xday.get().clone()
+    path_ = '0:datetime1'
+    dt = data.findOne(path: path_).value
     $('[formid=0] .minus-hour').trigger('click')
-    dt2 = xday.get()
+    dt2 = data.findOne(path: path_).value
     expect(dt.diff(dt2, 'hours')).toBe(1)
 
   it 'test plus 1 hour', ->
-    dt = xday.get().clone()
+    path_ = '0:datetime1'
+    dt = data.findOne(path: path_).value
     $('[formid=0] .plus-hour').trigger('click')
-    dt2 = xday.get()
+    dt2 = data.findOne(path: path_).value
     expect(dt.diff(dt2, 'hours')).toBe(-1)
 
   it 'test minus 1 month', ->
-    dt = xday.get().clone()
+    path_ = '0:datetime1'
+    dt = data.findOne(path: path_).value
     $('[formid=0] .minus-month').trigger('click')
-    dt2 = xday.get()
+    dt2 = data.findOne(path: path_).value
     expect(dt.diff(dt2, 'months')).toBe(1)
 
   it 'test plus 1 month', ->
-    dt = xday.get().clone()
+    path_ = '0:datetime1'
+    dt = data.findOne(path: path_).value
     $('[formid=0] .plus-month').trigger('click')
-    dt2 = xday.get()
+    dt2 = data.findOne(path: path_).value
     expect(dt.diff(dt2, 'months')).toBe(-1)
 
   it 'test minus 1 year', ->
-    dt = xday.get().clone()
+    path_ = '0:datetime1'
+    dt = data.findOne(path: path_).value
     $('[formid=0] .minus-year').trigger('click')
-    dt2 = xday.get()
+    dt2 = data.findOne(path: path_).value
     expect(dt.diff(dt2, 'years')).toBe(1)
 
   it 'test plus 1 year', ->
-    dt = xday.get().clone()
+    path_ = '0:datetime1'
+    dt = data.findOne(path: path_).value
     $('[formid=0] .plus-year').trigger('click')
-    dt2 = xday.get()
+    dt2 = data.findOne(path: path_).value
     expect(dt.diff(dt2, 'years')).toBe(-1)
 
   it 'test change year', ->
-    dt = xday.get().clone()
+    path_ = '0:datetime1'
+    dt = data.findOne(path: path_).value
     current_year = parseInt($('[formid=0] .xdatetime-year').val())
     $('[formid=0] .xdatetime-year').val(current_year+1)
-    $('[formid=0] .set-year').trigger('click')
 
-    dt2 = xday.get()
+    $('[formid=0] .xdatetime-year').trigger('focusin')
+    $('[formid=0] .xdatetime-year').trigger('focusout')
+    dt2 = data.findOne(path: path_).value
     expect(dt2.diff(dt, 'years')).toBe(1)
 
-  it 'test change time', ->
-    dt = moment($('[formid=0].xwidget').val()).startOf('day')
-    $('[formid=0] .xdatetime-time').val('00:00')
-    $('[formid=0] .set-time').trigger('click')
-    Meteor.flush()
-    dt2 = moment($('[formid=0].xwidget').val())
-    bool = dt.isSame(dt2)
-    expect(bool).toBe(true)
+  it 'test change input date', ->
+    path_ = '0:datetime1'
+    $('[formid=0] .xdatetime-input').val('01-01-2015 00:00')
+    $('[formid=0] .xdatetime-input').trigger('focusin')
+    $('[formid=0] .xdatetime-input').trigger('focusout')
+    dt_format = data.findOne(path: path_).value.clone().local().format('DD-MM-YYYY HH:mm')
+    expect(dt_format).toBe('01-01-2015 00:00')
 
