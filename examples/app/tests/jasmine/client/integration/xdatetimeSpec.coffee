@@ -60,10 +60,11 @@ describe 'test basics', ->
     expect(bool).toBe(true)
 
   it 'test click day', ->
+    $('[formid=0].xwidget').val(moment.utc().toDate())
     $('[formid=0] .show-calendar').trigger('click')
-    Meteor.flush()
+    Tracker.flush()
     $('[formid=0] .xtoday').trigger('click')
-    Meteor.flush()
+    Tracker.flush()
     back = moment($('[formid=0].xwidget').val()).startOf('day').utc()
     today = moment().startOf('day').utc()
     expect(back.isSame(today)).toBe(true)
