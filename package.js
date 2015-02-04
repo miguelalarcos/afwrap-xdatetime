@@ -11,7 +11,7 @@ Package.onUse(function(api) {
   api.use('jquery', 'client');
   api.use('templating', 'client');
   api.use('aldeed:autoform@4.2.2', 'client');
-  api.use('miguelalarcos:xdatetime', 'client');
+  api.use('miguelalarcos:xdatetime@0.2.3', 'client');
   api.addFiles('wrap.coffee', 'client');
 });
 
