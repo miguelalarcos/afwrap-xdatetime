@@ -5,7 +5,7 @@
 <template name="xdatetime_view">
     {{#with data}}
         {{#autoForm id="id1" doc=this type='method' meteormethod='save' schema='dateSchema'}}
-        <div>{{> afFieldInput  type='xdatetime' formid="id1" name='datetime1' time='true' format='DD-MM-YYYY HH:mm'}}</div>
+        <div>{{> afFieldInput  type='xdatetime' formid="id1" name='datetime1' time=true format='DD-MM-YYYY HH:mm'}}</div>
         <div>{{> afFieldInput  type='xdatetime' formid="id1" name='datetime2' format='DD-MM-YYYY'}}</div>
         <div><button class="ui button" type="submit">submit</button></div>
         {{/autoForm}}
@@ -15,6 +15,6 @@
 
 <template name="testing">
     {{#autoForm id="0" doc=this type='method' meteormethod='save' schema='dateSchema'}}
-        <div>{{> afFieldInput  type='xdatetime' formid="0" name='datetime1' time='true' format='DD-MM-YYYY HH:mm'}}</div>
+        <div>{{> afFieldInput  type='xdatetime' formid="0" name='datetime1' time=true format='DD-MM-YYYY HH:mm'}}</div>
     {{/autoForm}}
 </template>
