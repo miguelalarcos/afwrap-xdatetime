@@ -16,7 +16,7 @@ describe 'test dayRow',->
 describe 'test init', ->
   it 'test', ->
     m=moment('2015-01-01')
-    spyOn(moment, 'utc').and.returnValue(m)
+    spyOn(window, 'moment').and.returnValue(m)
     el = Blaze.renderWithData(Template.testing, {}, $('body')[0])
     Meteor.flush()
     back=$('[formid=0].xwidget').val()
